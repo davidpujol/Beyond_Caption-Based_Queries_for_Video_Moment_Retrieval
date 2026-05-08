@@ -1,0 +1,8 @@
+*.pth filter=lfs diff=lfs merge=lfs -text
+*.pt filter=lfs diff=lfs merge=lfs -text
+*.ckpt filter=lfs diff=lfs merge=lfs -text
+checkpoints/* filter=lfs diff=lfs merge=lfs -text
+results*/ filter=lfs diff=lfs merge=lfs -text
+gemma_env/* filter=lfs diff=lfs merge=lfs -text
+*.so filter=lfs diff=lfs merge=lfs -text
+*.log filter=lfs diff=lfs merge=lfs -text

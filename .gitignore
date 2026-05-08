@@ -1,0 +1,69 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.env/
+.venv/
+
+# PyTorch checkpoints and Tensorflow checkpoints
+*.pt
+*.pth
+*.ckpt
+*.ckpt.*
+checkpoint/
+checkpoints/
+results*/
+gemma_env/*
+
+# Huggingface model cache and transformers cache
+.cache/
+transformers_cache/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VSCode settings
+.vscode/
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# System files
+.DS_Store
+Thumbs.db
+
+# MacOS file artifacts
+*.DS_Store
+
+# Tensorboard log files
+runs/
+
+# Python coverage files
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Temporary files
+*.tmp
+*.temp
+
+baselines/*/data/results/
+*.ckpt
+opt.json
