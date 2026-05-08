@@ -202,7 +202,7 @@ pip install -r requirements_gemma_generation.txt
 
 **Baseline Model:**
 ```bash
-CUDA_VISIBLE_DEVICES=1 bash baselines/CGDETR/cg_detr/scripts/train.sh hd_epic
+CUDA_VISIBLE_DEVICES=0 bash baselines/CGDETR/cg_detr/scripts/train.sh hd_epic
 CUDA_VISIBLE_DEVICES=0 bash baselines/CGDETR/cg_detr/scripts/train.sh activity_net_captions
 CUDA_VISIBLE_DEVICES=0 bash baselines/CGDETR/cg_detr/scripts/train.sh yc2
 ```
@@ -351,40 +351,6 @@ python baselines/CGDETR/standalone_eval/eval.py \
   --predictions predictions.json \
   --ground_truth annotations.json
 ```
-
-## Project Structure
-
-```
-.
-├── baselines/
-│   ├── CGDETR/                 # CG-DETR implementation
-│   │   ├── cg_detr/
-│   │   ├── scripts/            # Training & inference scripts
-│   │   └── standalone_eval/    # Evaluation utilities
-│   └── ld_detr/                # LD-DETR implementation
-│       ├── ld_detr/
-│       ├── scripts/            # Training & inference scripts
-│       └── standalone_eval/    # Evaluation utilities
-├── environment_cgdetr.yml      # Conda environment file
-├── requirements_gemma_generation.txt
-└── README.md
-```
-
-## Privacy & Sanitization
-
-**Note for public distribution**: The checkpoint files (`opt.json`) may contain personal file paths from the original training environment. These paths are **not used during inference** because:
-
-1. **Inference scripts override them**: All scripts pass explicit paths via command-line flags (`--t_feat_dir`, `--v_feat_dirs`, `--eval_path`)
-2. **Config loader skips them**: The configuration system specifically ignores these fields when loading from `opt.json`
-
-For complete transparency, you can sanitize the checkpoints before uploading:
-
-```bash
-# Sanitize all opt.json files to remove personal paths
-bash scripts/sanitize_checkpoints.sh /path/to/checkpoints
-```
-
-See [PRIVACY_SANITIZATION.md](PRIVACY_SANITIZATION.md) for detailed information about privacy handling and sanitization steps.
 
 ## Citation
 
