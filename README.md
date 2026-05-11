@@ -42,44 +42,49 @@ The complete pipeline for preparing the search-query benchmarks:
 ```
 Original Datasets (HD-EPIC, ActivityNet-Captions, YouCook2)
     ↓
-1. Feature Extraction (InternVideo2)
+[STAGE 1] Underspecify Queries (Gemma LLM)
+    ↓ Simplified queries
     ↓
-2. Underspecify Queries (Gemma LLM)
+[STAGE 2] Match & Prepare Queries
+    ├─ Step 1: Merge similar queries (semantic similarity)
+    ├─ Step 2: Generate window-wise annotations (temporal windows)
+    └─ Step 3: Split into train/validation
+    ↓ Final annotations (*_merged_window_500_train/val.jsonl)
     ↓
-3. Validate & Match Queries
+[STAGE 3] Feature Extraction (InternVideo2) ← PERFORMED LAST
+    ↓ Extract video & text features for matched queries only
     ↓
-4. Prepare Final Data (*_merged_window_500.jsonl)
+Final Dataset Ready for Training
 ```
 
 **Quick Start:**
 ```bash
-# 1. Feature Extraction
-# Follow: dataset_processing/1_FEATURE_EXTRACTION.md
-# Use InternVideo2 or any Vision-Language Model
-
-# 2. Underspecify Queries (Requires Gemma)
-source gemma_env/bin/activate
-python dataset_processing/2_underspecify_queries/hd_epic/underspecify_queries_hd_epic.py --input_file ...
-
-# 3-4. Complete Pipeline
+# Complete pipeline guide:
 cd dataset_processing/
-cat README.md  # Full step-by-step guide
+cat README.md  # Full step-by-step guide with all commands
 ```
 
-**See Also:** 
-- `dataset_processing/README.md` - Complete pipeline documentation
-- `dataset_processing/1_FEATURE_EXTRACTION.md` - Feature extraction guide
-- `dataset_processing/2_underspecify_queries/README.md` - LLM-based underspecification
-- `dataset_processing/3_validate_queries/README.md` - Query validation
-- `dataset_processing/4_prepare_data/README.md` - Final data preparation
+**Documentation:**
+- `dataset_processing/README.md` - Complete pipeline documentation with all 3 stages
+  - Stage 1: Underspecify Queries (Gemma LLM)
+  - Stage 2: Match & Prepare Queries (merging, windowing, splitting)
+  - Stage 3: Feature Extraction (InternVideo2)
 
 ### Download Pre-Processed Data
 
-We provide pre-processed datasets (features + underspecified annotations) for quick start:
+We provide pre-processed datasets (features + underspecified annotations) and model checkpoints for quick start:
 
 #### Option 1: Manual Download (Browser)
-- **Model Checkpoints:** [Google Drive Link](https://drive.google.com/file/d/1oUvrOJhjVVSKQhMW3TMogTzYiKjsxwC0/view?usp=drive_link)
-- **Features & Annotations:** [Google Drive Link](https://drive.google.com/file/d/1Ah46dkXMYNP44Xfi3k1JWaCKWEtMMu_5/view?usp=sharing)
+- **All-in-One Package** (Model Checkpoints + Features + Annotations): [Google Drive Link](https://drive.google.com/file/d/12oHlqedwwrb45FW8QFt_pWc-dNXewGSS/view?usp=sharing)
+
+After downloading, extract to the repository root:
+```bash
+unzip downloaded_file.zip -d ./
+```
+
+This will create:
+- `model_checkpoints/` - Pre-trained model weights
+- `data/` - Pre-processed datasets with features and annotations
 
 #### Option 2: Command-Line Download
 
@@ -88,20 +93,14 @@ First, install `gdown`:
 pip install gdown
 ```
 
-Download the model checkpoints:
+Download all-in-one package:
 ```bash
-gdown 1oUvrOJhjVVSKQhMW3TMogTzYiKjsxwC0 -O model_checkpoints.zip
-```
-
-Download the features and annotations:
-```bash
-gdown 1Ah46dkXMYNP44Xfi3k1JWaCKWEtMMu_5 -O features_annotations.zip
+gdown 12oHlqedwwrb45FW8QFt_pWc-dNXewGSS -O data_and_models.zip
 ```
 
 Extract the downloaded files:
 ```bash
-unzip model_checkpoints.zip -d ./
-unzip features_annotations.zip -d ./data
+unzip data_and_models.zip -d ./
 ```
 
 ### Datasets
